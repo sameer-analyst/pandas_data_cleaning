@@ -1,0 +1,10 @@
+import pandas as pd
+df = pd.read_csv("sample_data.csv",parse_dates=["Date_of_Birth"])
+print(df.head())
+print(df.isnull().sum())
+df["Gender"] = df["Gender"].str.lower().str.strip()
+df[["Age","Score"]] = df[["Age","Score"]].apply(pd.to_numeric,errors="coerce")
+df.columns = df.columns.str.lower().str.replace(' ','-')
+df = df.drop_duplicates()
+df = df.dropna()
+df.to_csv("clean_data.csv",index=False)
